@@ -38,7 +38,6 @@ class Routers extends Component {
                 }
             }
             else {
-                console.log(user)
                 that.setState({
                     authed: false
                 })

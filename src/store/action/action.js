@@ -129,9 +129,10 @@ export function signupAction(usr) {
 
 export function signinAction(user) {
     return dispatch => {
-        console.log('user in signin', user);
+        // console.log('user in signin', user);
         firebase.auth().signInWithEmailAndPassword(user.email, user.password)
         .then((userObj) => {
+                // console.log(userObj);
                 firebase.database().ref(`/users/${userObj.uid}`).on('value', snap => {
                     let data = snap.val();
                     if(data){
@@ -148,7 +149,8 @@ export function signinAction(user) {
                     }else{
                         userObj.delete().then(() => {
                             dispatch({type: ActionTypes.ERROR, payload: 'delete by Admin'});
-                        })   
+                        })
+                        dispatch({type: ActionTypes.ERROR, payload: 'delete by Admin'});                           
                     }
                 })
             })
@@ -182,7 +184,7 @@ export function submitData(obj){
 
 export function logoutAction(){
     return dispatch => {
-        console.log('userLogout');
+        // console.log('userLogout');
         firebase.auth().onAuthStateChanged((user) => {
             firebase.auth().signOut()
                 .then(() => {
@@ -199,12 +201,14 @@ export function logoutAction(){
 export function getUserName(){
     return dispatch => {
         firebase.auth().onAuthStateChanged((user) => {
-            let UID = user.uid;
-            firebase.database().ref(`users/${UID}/`).on('value', snap => {
-                // console.log(snap.val());
-                let data = snap.val();
-                dispatch({type: ActionTypes.GETUSERNAME, payload: data})
-            })
+            if(user){
+                    let UID = user.uid;
+                    firebase.database().ref(`users/${UID}/`).on('value', snap => {
+                    // console.log(snap.val());
+                    let data = snap.val();
+                    dispatch({type: ActionTypes.GETUSERNAME, payload: data})
+                })
+            }
         });
     };
 };
