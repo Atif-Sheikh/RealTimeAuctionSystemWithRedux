@@ -31,8 +31,8 @@ class Routers extends Component {
                 that.setState({
                     authed: true
                 });
-                let type = localStorage.getItem("type")
-                let convertype = JSON.parse(type)
+                let type = localStorage.getItem("type");
+                let convertype = JSON.parse(type);
                 if (convertype !== null) {
                     history.push(convertype);
                 }

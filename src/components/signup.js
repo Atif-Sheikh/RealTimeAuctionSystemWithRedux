@@ -29,7 +29,7 @@ class Signup extends Component {
             password,
             confirmPassword,
         };
-        if (password === confirmPassword && email && userName) {
+        if (password === confirmPassword && email.trim() && userName.trim()) {
             this.props.signupwithEmailPassword(user);
             this.setState({loader: true});
         }

@@ -76,6 +76,7 @@ export function signupAction(usr) {
     return dispatch => {
         firebase.auth().createUserWithEmailAndPassword(usr.email, usr.password)
         .then((userObj) => {
+            localStorage.setItem('type', JSON.stringify('/home'));        
             let name = usr.userName;
                 let user = {
                     name: usr.userName,
@@ -97,7 +98,8 @@ export function signinAction(user) {
     return dispatch => {
         console.log('user in signin', user);
         firebase.auth().signInWithEmailAndPassword(user.email, user.password)
-            .then((userObj) => {
+        .then((userObj) => {
+            localStorage.setItem('type', JSON.stringify('/home'));        
                 let user = {
                     uid: userObj.uid,
                     email: userObj.email,
@@ -118,8 +120,19 @@ export function submitData(obj){
         firebase.auth().onAuthStateChanged((user) => {
             let UID = user.uid;
             obj.UID = UID;
-            console.log(obj);
-            firebase.database().ref(`/auction/`).push(obj);
+            // let imgName = obj.img.name;
+            // // obj.imgPath = imgName; 
+            // console.log(obj.img);
+            firebase.storage().ref(`/images/${UID}/${new Date().getTime()}`).put(obj.img)
+                .then((snap) => {
+                    obj.pic = snap.metadata.downloadURLs[0];
+                    firebase.database().ref(`/auction/`).push(obj);
+                    // console.log(ad);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            // console.log(path);
         });
     };
 };

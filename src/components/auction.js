@@ -26,6 +26,8 @@ class Auction extends Component {
             amount: 0,
             error: '',
             route: false,
+            img: '',
+            imgValue: 0,
         };
     };
     handleChangeMinDate = (event, date) => {
@@ -46,7 +48,7 @@ class Auction extends Component {
     };
     submitForm = (e) => {
         e.preventDefault();
-        const { productName, discription, minDate, endTime, category, amount } = this.state;
+        const { productName, discription, minDate, endTime, category, amount, img } = this.state;
         let today = new Date();
         if(minDate >= today){
             let date = minDate.getDate();
@@ -55,7 +57,7 @@ class Auction extends Component {
             let hours = endTime.getHours();
             let minutes = endTime.getMinutes();
             // console.log(date, month, year, hours, minutes); 
-            let obj = { productName, discription, category, date, month, year, hours, minutes, amount };
+            let obj = { productName, discription, category, date, month, year, hours, minutes, amount, img };
             this.props.submitData(obj);
             this.setState({route: true});
         }else{
@@ -76,12 +78,12 @@ class Auction extends Component {
                             style={styles.field}
                             floatingLabelText="Product Name"
                             required
-                            onChange={(e)=> this.setState({error: '', productName: e.target.value})}                            
+                            onChange={(e)=> this.setState({error: '', productName: e.target.value.trim()})}                            
                         />
                         <TextField
                             floatingLabelText="Discription"
                             required                            
-                            onChange={(e)=> this.setState({error: '', discription: e.target.value})}                            
+                            onChange={(e)=> this.setState({error: '', discription: e.target.value.trim()})}                            
                         />
                         <DatePicker
                             floatingLabelText="Auction End Date"
@@ -100,6 +102,8 @@ class Auction extends Component {
                             <MenuItem value='Computer' primaryText='Computer' />
                             <MenuItem value='Mobile' primaryText='Mobile' />
                         </DropDownMenu>
+                        <progress style={styles.progress} value={this.state.imgValue} max='100'>10%</progress>
+                        <input required='required' type='file' onChange={(e) => this.setState({img: e.target.files[0], imgValue: 100})} />
                         <TextField
                             type='number'
                             floatingLabelText="Starting Amount"
@@ -130,6 +134,11 @@ const styles = {
         marginTop: '2%',
         textAlign: 'center',
         display: 'inline-block',
+    },
+    progress: {
+        width: '66.5%', 
+        height: '10px', 
+        margin: '8px',
     },
 };
 function mapStateToProps(state){

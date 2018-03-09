@@ -47,16 +47,16 @@ class Wrapper extends Component {
         this.setState({bidders: true});        
     };
     renderButton = (UID) => {
-        const { date, month, year, hours, minutes } = this.props.data;        
+        const { date, month, year, /*hours, minutes*/ } = this.props.data;        
         let now = new Date();
         let newDate = now.getDate();
         let newMonth = now.getMonth();
         let newYear = now.getFullYear();
-        let newHours = now.getHours();
-        let newMinutes = now.getMinutes();
+        // let newHours = now.getHours();
+        // let newMinutes = now.getMinutes();
         // console.log(date, month, year, hours, minutes, newDate, newMonth, newYear, newHours, newMinutes);
                     //   9     2    2018   14      14        7         2       2018      11          56
-        if((year <= newYear && month <= newMonth && date <= newDate) || hours <= newHours){
+        if(year <= newYear && month <= newMonth && date <= newDate){
             // console.log(year, month, date, hours, minutes, newMinutes);
             return <RaisedButton label="Bid Expired" disabled={true} />
         }
@@ -76,15 +76,15 @@ class Wrapper extends Component {
               onClick={this.handleRequestClose}
             />,
         ];
-        const { productName, amount, discription, date, month, year, hours, minutes, category, UID } = this.props.data;
-        // console.log(date, month, year, hours, minutes);
+        const { productName, amount, discription, date, month, year, hours, minutes, category, UID, pic } = this.props.data;
+        // console.log(UID, imgPath);
         let endDate = `${date}-${month+1}-${year}`;
         let endTime = `${hours}:${minutes}`;
         return(
             <Paper style={styles.paper}>
-                <h1>{productName}
+                <h1>{productName}</h1>
+                <img style={{width: 300, height: '150px'}} src={pic} />
                     <hr/>
-                </h1>
                 <p>Product Details: <span style={styles.highlight}>{discription}</span></p>
                 <p>Category: <span style={styles.highlight}>{category}</span></p>
                 <p>End Date: <span style={styles.highlight}>{endDate}</span></p>                
@@ -125,7 +125,7 @@ class Wrapper extends Component {
                         <TextField
                             floatingLabelText="Enter Name..."
                             value={this.state.bidderName}
-                            onChange={(e) => this.setState({bidderName: e.target.value})}
+                            onChange={(e) => this.setState({bidderName: e.target.value.trim()})}
                         /><br />
                         <TextField
                             type='number'
