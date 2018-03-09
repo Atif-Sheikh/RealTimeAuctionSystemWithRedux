@@ -28,6 +28,7 @@ class Signup extends Component {
             userName,
             password,
             confirmPassword,
+            Admin: false,
         };
         if (password === confirmPassword && email.trim() && userName.trim()) {
             this.props.signupwithEmailPassword(user);

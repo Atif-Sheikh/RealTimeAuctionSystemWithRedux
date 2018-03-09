@@ -9,6 +9,7 @@ const INITIAL_STATE = {
     signupError: '',
     UID: '',
     bidders: [],
+    users: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -17,6 +18,11 @@ export default (state = INITIAL_STATE, action) => {
             return ({
                 ...state,
                 currentUser: action.payload
+            });
+        case ActionTypes.GETUSERS:
+            return ({
+                ...state,
+                users: action.payload,
             });
         case ActionTypes.GETBIDDERS: 
             return ({

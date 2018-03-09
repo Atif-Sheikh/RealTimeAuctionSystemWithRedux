@@ -51,15 +51,21 @@ class Auction extends Component {
         const { productName, discription, minDate, endTime, category, amount, img } = this.state;
         let today = new Date();
         if(minDate >= today){
+            console.log(minDate.getTime);
+            let hours = endTime.getHours();
+            let minutes = endTime.getMinutes();
+            minDate.setHours(hours, minutes);
+            // console.log(minDate);
             let date = minDate.getDate();
             let month = minDate.getMonth();
             let year = minDate.getFullYear();
-            let hours = endTime.getHours();
-            let minutes = endTime.getMinutes();
+            // let now = new Date(year, month, date, hours, minutes);
+            let T = minDate.getTime();
+            console.log(T);
             // console.log(date, month, year, hours, minutes); 
-            let obj = { productName, discription, category, date, month, year, hours, minutes, amount, img };
+            let obj = { productName, discription, category, date, month, year, hours, minutes, amount, img, T };
             this.props.submitData(obj);
-            this.setState({route: true});
+            this.setState({route: true, img: ''});
         }else{
             this.setState({error: 'enter all fields carefully...'});
         };
@@ -101,6 +107,8 @@ class Auction extends Component {
                         <span style={{position: 'relative', top: '-22px'}}>Select Category:</span><DropDownMenu style={{lineHeight: '60px'}} value={this.state.category} onChange={this.handleChange}>
                             <MenuItem value='Computer' primaryText='Computer' />
                             <MenuItem value='Mobile' primaryText='Mobile' />
+                            <MenuItem value='Camera' primaryText='Camera' />
+                            <MenuItem value='Other' primaryText='Other' />
                         </DropDownMenu>
                         <progress style={styles.progress} value={this.state.imgValue} max='100'>10%</progress>
                         <input required='required' type='file' onChange={(e) => this.setState({img: e.target.files[0], imgValue: 100})} />

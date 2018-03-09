@@ -13,6 +13,39 @@ var config = {
   };
   firebase.initializeApp(config);
 
+export function getUsers(){
+    return dispatch => {
+        firebase.database().ref(`/users`).on('value', snap => {
+            let users = [];
+            let data = snap.val();
+            for(let key in data){
+                if(data[key]['Admin']){
+                    // console.log(data[key]['Admin']);
+                }else{
+                    users.push(data[key]);
+                }
+            };
+            dispatch({type: ActionTypes.GETUSERS, payload: users});
+        })
+    };
+};
+export function deleteUser(UID){
+    return dispatch => {
+        firebase.database().ref(`/users/${UID}`).remove();
+        firebase.database().ref(`/auction/`).on('value', snap => {
+            let data = snap.val();
+            let keys = [];
+            for(let key in data){
+                if(data[key]['UID'] === UID){
+                    keys.push(key);
+                }
+            };
+            for(let i=0; i<keys.length; i++){
+                firebase.database().ref(`/auction/${keys[i]}`).remove();
+            };
+        });
+    };
+};
 export function getBidders(key){
     return dispatch => {
         // console.log(key);
@@ -99,17 +132,27 @@ export function signinAction(user) {
         console.log('user in signin', user);
         firebase.auth().signInWithEmailAndPassword(user.email, user.password)
         .then((userObj) => {
-            localStorage.setItem('type', JSON.stringify('/home'));        
-                let user = {
-                    uid: userObj.uid,
-                    email: userObj.email,
-                    name: userObj.displayName,
-                };
-                // console.log(user);
-                dispatch({type: ActionTypes.SIGNIN, payload: user,})
-                history.push('/Home');
-                // console.log('then');
-            }).catch((error) => {
+                firebase.database().ref(`/users/${userObj.uid}`).on('value', snap => {
+                    let data = snap.val();
+                    if(data){
+                        localStorage.setItem('type', JSON.stringify('/home'));        
+                        let user = {
+                            uid: userObj.uid,
+                            email: userObj.email,
+                            name: userObj.displayName,
+                        };
+                        // console.log(user);
+                        dispatch({type: ActionTypes.SIGNIN, payload: user,})
+                        history.push('/Home');
+                        // console.log('then');
+                    }else{
+                        userObj.delete().then(() => {
+                            dispatch({type: ActionTypes.ERROR, payload: 'delete by Admin'});
+                        })   
+                    }
+                })
+            })
+        .catch((error) => {
                 console.log(error.message);                
                 dispatch({ type: ActionTypes.ERROR, payload: error.message});
         });

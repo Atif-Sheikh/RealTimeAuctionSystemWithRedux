@@ -17,6 +17,7 @@ class Wrapper extends Component {
             bid: 0,
             bidders: false,
             expired: false,
+            fullImage: false,
         };
     };
     componentWillMount(){
@@ -25,6 +26,7 @@ class Wrapper extends Component {
     handleRequestClose = () => {
         this.setState({
           open: false,
+          fullImage: false,
         });
     };
     applyBid = () => {
@@ -83,7 +85,15 @@ class Wrapper extends Component {
         return(
             <Paper style={styles.paper}>
                 <h1>{productName}</h1>
-                <img style={{width: 300, height: '150px'}} src={pic} />
+                <img alt='ProductImage' style={{width: 300, height: '180px'}} onClick={()=> this.setState({fullImage: true})} src={pic} />
+                <Dialog onRequestClose={this.handleClose} autoScrollBodyContent={true} actions={<FlatButton
+                    label="Close"
+                    primary={true}
+                    onClick={()=> this.setState({fullImage: false})}
+                    />} 
+                open={this.state.fullImage}>
+                    <img alt='ProductImage' style={{width: '100%', height: '1800%'}} onClick={()=> this.setState({fullImage: false})} src={pic} />
+                </Dialog>
                     <hr/>
                 <p>Product Details: <span style={styles.highlight}>{discription}</span></p>
                 <p>Category: <span style={styles.highlight}>{category}</span></p>

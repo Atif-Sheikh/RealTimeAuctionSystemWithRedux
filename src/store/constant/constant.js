@@ -9,6 +9,7 @@
     GETDATA: 'GETDATA',
     GETKEYS: 'GETKEYS',
     GETBIDDERS: 'GETBIDDERS',
+    GETUSERS: 'GETUSERS',
 }
 
 export default ActionTypes;

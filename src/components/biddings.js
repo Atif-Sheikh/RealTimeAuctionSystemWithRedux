@@ -44,7 +44,7 @@ function mapDispatchToProps(dispatch){
 
 const styles = {
     paper: {
-        maxHeight: '500px',
+        maxHeight: '600px',
         width: '90%',
         margin: 20,
         textAlign: 'center',

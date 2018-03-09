@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { logoutAction, getUserName } from '../store/action/action';
 import Auction from './auction';
 import Biddings from './biddings';
+import Users from './users';
 
 class Home extends Component {
     constructor(){
@@ -19,6 +20,7 @@ class Home extends Component {
             uid: '',
             auctioneer: true,
             bidder: false,
+            users: true,
         };
     };
     componentWillUpdate(){
@@ -54,28 +56,55 @@ class Home extends Component {
                 >
                     <span style={styles.heading}>Real Time Auction System</span>
                 </AppBar>
-                <Drawer
-                    docked={false}
-                    width={200}
-                    open={this.state.open}
-                    onRequestChange={(open) => this.setState({open})}
-                >
-                    <MenuItem onClick={()=> this.setState({open: false, auctioneer: true, bidder: false})}>Auctioneer</MenuItem>
-                    <MenuItem onClick={()=> this.setState({open: false, auctioneer: false, bidder: true})}>Bidder</MenuItem>                
-                </Drawer>
+                {
+                    this.props.user.Admin === false ? <div>
+                        <Drawer
+                        docked={false}
+                        width={200}
+                        open={this.state.open}
+                        onRequestChange={(open) => this.setState({open})}
+                    >
+                        <MenuItem onClick={()=> this.setState({open: false, auctioneer: true, bidder: false})}>Auctioneer</MenuItem>
+                        <MenuItem onClick={()=> this.setState({open: false, auctioneer: false, bidder: true})}>Bidder</MenuItem>                
+                    </Drawer>
+                    <div>
+                        {
+                            this.state.auctioneer ? <div>
+                                <Auction />
+                            </div> : ''
+                        }
+                        {
+                        this.state.bidder ? <div>
+                                <Biddings />
+                            </div> : ''
+                        }
+                    </div>
+                </div> :
                 <div>
-                    {
-                        this.state.auctioneer ? <div>
-                            <Auction />
-                        </div> : ''
-                    }
-                    {
-                    this.state.bidder ? <div>
-                            <Biddings />
-                        </div> : ''
-                    }
+                        <Drawer
+                        docked={false}
+                        width={200}
+                        open={this.state.open}
+                        onRequestChange={(open) => this.setState({open})}
+                    >
+                        <MenuItem onClick={()=> this.setState({open: false, users: true, bidder: false})}>Users</MenuItem>
+                        <MenuItem onClick={()=> this.setState({open: false, users: false, bidder: true})}>Bidders</MenuItem>                
+                    </Drawer>
+                    <div>
+                        {
+                            this.state.users ? <div>
+                                <Users />
+                            </div> : ''
+                        }
+                        {
+                        this.state.bidder ? <div>
+                                <Biddings />
+                            </div> : ''
+                        }
+                    </div>
                 </div>
-            </div>
+                }
+                </div>
         );
     };
 };
