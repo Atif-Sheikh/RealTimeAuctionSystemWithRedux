@@ -33,15 +33,15 @@ class Wrapper extends Component {
     applyBid = () => {
         this.setState({open: true})
     };
-    submitForm = (e) => {
-        e.preventDefault();
+    submitForm = (amount) => {
+        // console.log(amount);
         const { bid , bidderName } = this.state;
-        if(bid && bidderName){
+        if(bid >= amount && bidderName){
             let key = this.props.pushKeys[this.props.index];
             let UID = this.props.user.UID;
             this.props.submitData(bid, bidderName, key, UID);
         }else{
-            alert('please enter all fields...');
+            alert('please enter all fields correctly...');
         }
     };
     deleteAuction = () => {
@@ -141,7 +141,7 @@ class Wrapper extends Component {
                     </Table>
                 </Dialog>
                 <Dialog modal={false} style={styles.dialog} actions={actions} open={this.state.open} onRequestClose={this.handleClose} autoScrollBodyContent={true} >
-                    <form onSubmit={this.submitForm}>
+                    <form onSubmit={(e)=> {e.preventDefault(); this.submitForm(amount)}}>
                         <TextField
                             floatingLabelText="Enter Name..."
                             value={this.state.bidderName}
@@ -189,6 +189,7 @@ const styles = {
         minWidth: 300,
         margin: 3,
         display: 'inline-block',
+        background: 'rgba(0,0,0,0.2)',
     },
     highlight: {
         fontWeight: 'bold',

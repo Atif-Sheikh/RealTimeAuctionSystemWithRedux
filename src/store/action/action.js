@@ -73,12 +73,12 @@ export function submitBid(bid, bidder, pushKey, UID){
                         break;
                     }
                 };
-                console.log(flag);
+                // console.log(flag);
                 if(flag){
-                    console.log(flag);
+                    // console.log(flag);
                     return alert('You are already apply bid...');
                 }else if(flag === false){
-                    console.log(flag);                
+                    // console.log(flag);                
                     firebase.database().ref(`/biddings/${pushKey}/`).push({UID, bid, bidder}).then(() => {
                         return alert('successfully apply bid...');
                     });

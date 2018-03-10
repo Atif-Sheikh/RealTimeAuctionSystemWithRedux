@@ -13,11 +13,11 @@
   padding: 20px;
   color: white;
 }
-/* body{ 
-  background-image: url('./images/a.jpg');
+body{ 
+  background-image: url('./images/auction.jpg');
   background-repeat: no-repeat;
   background-size: 100% 140%;
-}  */
+} 
 .App-title {
   font-size: 1.5em;
 }

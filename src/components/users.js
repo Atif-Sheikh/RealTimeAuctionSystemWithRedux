@@ -14,23 +14,25 @@ class Users extends Component {
             <div>
                 <Paper style={styles.paper} zDepth={3}>
                     <h1>Users</h1>
-                        <Table>
+                        <Table style={{background: '#5D4037', opacity: '0.9'}}>
                         <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
                         <TableRow>
-                            <TableHeaderColumn>ID</TableHeaderColumn>
-                            <TableHeaderColumn>Name</TableHeaderColumn>
-                            <TableHeaderColumn>Status</TableHeaderColumn>
-                            <TableHeaderColumn>Remove</TableHeaderColumn>
+                            <TableHeaderColumn style={{fontSize: '30px'}}>ID</TableHeaderColumn>
+                            <TableHeaderColumn style={{fontSize: '30px'}}>Name</TableHeaderColumn>
+                            <TableHeaderColumn style={{fontSize: '30px'}}>Status</TableHeaderColumn>
+                            <TableHeaderColumn style={{fontSize: '30px'}}>Remove</TableHeaderColumn>
                         </TableRow>
                         </TableHeader>
                         <TableBody displayRowCheckbox={false}>
                         {
                             this.props.users ? this.props.users.map((user, index) => {
                                 return <TableRow key={index.toString()}>
-                                    <TableRowColumn>{index+1} </TableRowColumn>  
-                                    <TableRowColumn>{user.name}</TableRowColumn>
-                                    <TableRowColumn>{user.email}</TableRowColumn>
-                                    <TableRowColumn><FlatButton label="Remove" primary={true} onClick={()=> this.props.deleteUser(user.UID)} /></TableRowColumn>
+                                    <TableRowColumn style={{fontSize: '20px'}}>{index+1} </TableRowColumn>  
+                                    <TableRowColumn style={{fontSize: '20px'}}>{user.name}</TableRowColumn>
+                                    <TableRowColumn style={{fontSize: '20px'}}>{user.email}</TableRowColumn>
+                                    <TableRowColumn style={{fontSize: '20px'}}>
+                                        <FlatButton label="Remove" primary={true} onClick={()=> this.props.deleteUser(user.UID)} />
+                                    </TableRowColumn>
                             </TableRow>
                             }) : '' 
                         }
@@ -65,6 +67,8 @@ const styles = {
         margin: 20,
         textAlign: 'center',
         display: 'inline-block',
+        background: '#5D4037', 
+        opacity: '0.9',
     },
 };
 

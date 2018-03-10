@@ -82,6 +82,10 @@ const styles = {
         textAlign: 'center',
         borderRadius: '20px',
         display: 'inline-block',
+        // opacity: '0.7',
+        // background: 'rgba(0,0,0,0.4)',
+        background: '#795548',
+        opacity: '0.9',
     },
     error: {
         color: 'red',

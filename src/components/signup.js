@@ -103,6 +103,9 @@ const styles = {
         padding: "10px",
         textAlign: 'center',
         display: 'inline-block',
+        // background: 'rgba(0,0,0,0.4)',
+        background: '#795548',
+        opacity: '0.9',        
     },
     floatingLabelStyle: {   
         textAlign : 'left',        

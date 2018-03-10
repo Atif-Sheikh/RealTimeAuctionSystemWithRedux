@@ -53,12 +53,13 @@ class Home extends Component {
                     title={<span style={styles.title}>{this.props.user ? this.props.user.name : ''}</span>}
                     onLeftIconButtonClick={this.handleToggle}
                     iconElementRight={<FlatButton onClick={this.logout} label="LogOut" />}
+                    style={{background: '#795548', opacity: '0.9'}}
                 >
                     <span style={styles.heading}>Real Time Auction System</span>
                 </AppBar>
                 {
                     this.props.user.Admin ? <div>
-                        <Drawer
+                        <Drawer containerStyle={{background: '#F0F4C3'}}
                         docked={false}
                         width={200}
                         open={this.state.open}

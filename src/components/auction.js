@@ -110,7 +110,7 @@ class Auction extends Component {
                             <MenuItem value='Camera' primaryText='Camera' />
                             <MenuItem value='Other' primaryText='Other' />
                         </DropDownMenu>
-                        <progress style={styles.progress} value={this.state.imgValue} max='100'>10%</progress>
+                        <progress style={styles.progress} value={this.state.imgValue} max='100' />
                         <input required='required' type='file' onChange={(e) => this.setState({img: e.target.files[0], imgValue: 100})} />
                         <TextField
                             type='number'
@@ -142,6 +142,9 @@ const styles = {
         marginTop: '2%',
         textAlign: 'center',
         display: 'inline-block',
+        // background: 'rgba(0,0,0,0.8)'
+        background: '#795548',
+        opacity: '0.9',
     },
     progress: {
         width: '66.5%', 

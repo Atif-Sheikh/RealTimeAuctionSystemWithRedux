@@ -50,6 +50,7 @@ const styles = {
         textAlign: 'center',
         display: 'inline-block',
         overflowY: 'scroll',
+        background: 'rgba(0,0,0,0.4)',
     },
     refresh: {
         display: 'inline-block',
