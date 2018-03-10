@@ -50,37 +50,14 @@ class Home extends Component {
         return(
             <div>
                 <AppBar
-                    title={<span style={styles.title}>{this.props.user.name}</span>}
+                    title={<span style={styles.title}>{this.props.user ? this.props.user.name : ''}</span>}
                     onLeftIconButtonClick={this.handleToggle}
                     iconElementRight={<FlatButton onClick={this.logout} label="LogOut" />}
                 >
                     <span style={styles.heading}>Real Time Auction System</span>
                 </AppBar>
                 {
-                    this.props.user.Admin === false ? <div>
-                        <Drawer
-                        docked={false}
-                        width={200}
-                        open={this.state.open}
-                        onRequestChange={(open) => this.setState({open})}
-                    >
-                        <MenuItem onClick={()=> this.setState({open: false, auctioneer: true, bidder: false})}>Auctioneer</MenuItem>
-                        <MenuItem onClick={()=> this.setState({open: false, auctioneer: false, bidder: true})}>Bidder</MenuItem>                
-                    </Drawer>
-                    <div>
-                        {
-                            this.state.auctioneer ? <div>
-                                <Auction />
-                            </div> : ''
-                        }
-                        {
-                        this.state.bidder ? <div>
-                                <Biddings />
-                            </div> : ''
-                        }
-                    </div>
-                </div> :
-                <div>
+                    this.props.user.Admin ? <div>
                         <Drawer
                         docked={false}
                         width={200}
@@ -102,7 +79,29 @@ class Home extends Component {
                             </div> : ''
                         }
                     </div>
-                </div>
+                </div> : <div>
+                            <Drawer
+                            docked={false}
+                            width={200}
+                            open={this.state.open}
+                            onRequestChange={(open) => this.setState({open})}
+                        >
+                            <MenuItem onClick={()=> this.setState({open: false, auctioneer: true, bidder: false})}>Auctioneer</MenuItem>
+                            <MenuItem onClick={()=> this.setState({open: false, auctioneer: false, bidder: true})}>Bidder</MenuItem>                
+                        </Drawer>
+                        <div>
+                            {
+                                this.state.auctioneer ? <div>
+                                    <Auction />
+                                </div> : ''
+                            }
+                            {
+                            this.state.bidder ? <div>
+                                    <Biddings />
+                                </div> : ''
+                            }
+                        </div>
+                    </div>
                 }
                 </div>
         );

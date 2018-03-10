@@ -28,7 +28,7 @@ class Signin extends Component {
         this.setState({loader: true})
         setTimeout(() => {
             this.setState({loader: false});
-        }, 2000)
+        }, 3000)
     };
     render() {
         return (

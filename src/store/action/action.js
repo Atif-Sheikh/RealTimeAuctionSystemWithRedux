@@ -103,9 +103,13 @@ export function getData(){
         });
     };
 };
-
+export function deleteAuction(key){
+    return dispatch => {
+        firebase.database().ref(`/auction/${key}`).remove();
+    };
+};
 export function signupAction(usr) {
-    console.log(usr);
+    // console.log(usr);
     return dispatch => {
         firebase.auth().createUserWithEmailAndPassword(usr.email, usr.password)
         .then((userObj) => {
@@ -115,9 +119,10 @@ export function signupAction(usr) {
                     name: usr.userName,
                     uid: userObj.uid,
                     email: userObj.email, 
+                    Admin: false,
                 };
                 // console.log('signed up successfully', user);
-                firebase.database().ref(`users/${user.uid}/`).set({email: user.email, UID: user.uid, name});
+                firebase.database().ref(`users/${user.uid}/`).set({email: user.email, UID: user.uid, name, Admin: false});
                 dispatch({ type: ActionTypes.SIGNUP, payload: user })
                 history.push('/home');
             }).catch((error) => {

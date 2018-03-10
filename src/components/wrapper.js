@@ -3,9 +3,10 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import Dialog from 'material-ui/Dialog';
-import { getUserName, submitBid, getBidders } from '../store/action/action';
+import { getUserName, submitBid, getBidders, deleteAuction } from '../store/action/action';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
+import deleteIcon from '../images/delete.png';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
 class Wrapper extends Component {
@@ -43,6 +44,10 @@ class Wrapper extends Component {
             alert('please enter all fields...');
         }
     };
+    deleteAuction = () => {
+        let key = this.props.pushKeys[this.props.index];
+        this.props.deleteAuction(key);
+    };
     bidders = () => {
         let key = this.props.pushKeys[this.props.index];
         this.props.getBidders(key);
@@ -79,12 +84,17 @@ class Wrapper extends Component {
             />,
         ];
         const { productName, amount, discription, date, month, year, hours, minutes, category, UID, pic } = this.props.data;
-        // console.log(UID, imgPath);
+        // console.log(this.props.user['Admin']);
         let endDate = `${date}-${month+1}-${year}`;
         let endTime = `${hours}:${minutes}`;
         return(
             <Paper style={styles.paper}>
-                <h1>{productName}</h1>
+                {
+                    this.props.user['Admin'] ? <span>
+                            <img style={styles.icon} alt='Delete' src={deleteIcon} onClick={this.deleteAuction} />
+                        </span> : ''
+                }
+                <h1 style={{color: 'rgba(0,0,0,0.6)'}}>{productName}</h1>
                 <img alt='ProductImage' style={{width: 300, height: '180px'}} onClick={()=> this.setState({fullImage: true})} src={pic} />
                 <Dialog onRequestClose={this.handleClose} autoScrollBodyContent={true} actions={<FlatButton
                     label="Close"
@@ -167,12 +177,15 @@ function mapDispatchToProps(dispatch){
         getBidders: (key) => {
             dispatch(getBidders(key))
         },
+        deleteAuction: (key) => {
+            dispatch(deleteAuction(key))
+        },
     });
 };
 const styles = {
     paper: {
         height: 'auto',
-        padding: '5px',
+        padding: '2px',
         minWidth: 300,
         margin: 3,
         display: 'inline-block',
@@ -181,6 +194,11 @@ const styles = {
         fontWeight: 'bold',
         color: 'rgba(0,0,0,0.6)',
         fontSize: '20px',
+    },
+    icon: {
+        width: 40,
+        height: 40,
+        cursor: 'pointer',
     },
     dialog: {
         width: '50%',

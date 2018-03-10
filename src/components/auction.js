@@ -37,7 +37,7 @@ class Auction extends Component {
             error: '', 
         });
     };
-    handleChange = (event, index, value) => {console.log(value);this.setState({category: value})};
+    handleChange = (event, index, value) => {this.setState({category: value})};
     handleChangeTime = (event, time) => {
         // let today = `${time.getHours()}:${time.getMinutes()}`;
         // console.log(today);
@@ -51,7 +51,7 @@ class Auction extends Component {
         const { productName, discription, minDate, endTime, category, amount, img } = this.state;
         let today = new Date();
         if(minDate >= today){
-            console.log(minDate.getTime);
+            // console.log(minDate.getTime);
             let hours = endTime.getHours();
             let minutes = endTime.getMinutes();
             minDate.setHours(hours, minutes);
@@ -61,7 +61,7 @@ class Auction extends Component {
             let year = minDate.getFullYear();
             // let now = new Date(year, month, date, hours, minutes);
             let T = minDate.getTime();
-            console.log(T);
+            // console.log(T);
             // console.log(date, month, year, hours, minutes); 
             let obj = { productName, discription, category, date, month, year, hours, minutes, amount, img, T };
             this.props.submitData(obj);
@@ -84,7 +84,7 @@ class Auction extends Component {
                             style={styles.field}
                             floatingLabelText="Product Name"
                             required
-                            onChange={(e)=> this.setState({error: '', productName: e.target.value.trim()})}                            
+                            onChange={(e)=> this.setState({productName: e.target.value.trim(), error: ''})}                            
                         />
                         <TextField
                             floatingLabelText="Discription"
